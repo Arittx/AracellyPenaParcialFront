@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useState } from "react";
 import Card from "./Card";
 
 const Form = () => {
+  const formRef = useRef(null);
   const [user, setUser] = useState({
     nombre: "",
     color: "",
@@ -24,15 +25,15 @@ const Form = () => {
     } else {
       setErr(true);
     }
+    formRef.current.reset();
   };
 
   return (
     <>
       <h1>Elige un color</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} ref={formRef}>
         <input
           type="text"
-          value={user.nombre}
           onChange={(event) =>
             setUser({ ...user, nombre: event.target.value.trimStart() })
           }
@@ -40,7 +41,6 @@ const Form = () => {
         />
         <input
           type="text"
-          value={user.color}
           onChange={(event) => setUser({ ...user, color: event.target.value })}
           placeholder="Ingresa tu color favorito (formato HEX)"
         />
